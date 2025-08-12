@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { z } from "zod";
-import { PageLayout } from "../../components/PageLayout";
+import {useEffect, useMemo, useState} from "react";
+import {Link, useSearchParams} from "react-router-dom";
+import {z} from "zod";
+import {PageLayout} from "../../components/PageLayout";
 import questionnaireData from "./data.json";
 
 // ===== Палитра/константы визуального стиля (UI-ТОЛЬКО) =====
@@ -183,8 +183,7 @@ function encodeStateToURL(state: QuestionnaireState): string | null {
     };
 
     const jsonString = JSON.stringify(compressedState);
-    const encoded = btoa(encodeURIComponent(jsonString));
-    return encoded;
+    return btoa(encodeURIComponent(jsonString));
   } catch (e) {
     console.error("Failed to encode state to URL:", e);
     return null;
@@ -337,7 +336,7 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
             <input
               id={it.id}
               type="checkbox"
-              checked={!!it.checked}
+              checked={it.checked}
               onChange={(e) => onToggle(section.key, it.id, e.target.checked)}
               className="mt-1 h-5 w-5 appearance-none rounded-md outline-none ring-2 ring-transparent transition"
               style={{ border: `1px solid ${RING_BEIGE}`, background: it.checked ? ACCENT_TEAL : "white" }}

@@ -1,9 +1,8 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm, copyFile, mkdir } from "fs/promises";
+import { rm } from "fs/promises";
 import path from "path";
-import sharp from "sharp";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   console.log(`
