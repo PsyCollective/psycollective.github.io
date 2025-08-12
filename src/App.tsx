@@ -4,7 +4,7 @@ import { ThemeProvider } from "./ThemeContext";
 import { ThemeToggle } from "./ThemeToggle";
 import Home from "./pages/Home";
 import Questionnaires from "./pages/Questionnaires";
-import RmEr18Questionnaire from "./questionnaires/rm-er18/RmEr18Questionnaire";
+import ValuesQuestionnaire from "@/questionnaires/values/ValuesQuestionnaire.tsx";
 import NotFound from "./pages/NotFound";
 
 function AppContent() {
@@ -14,7 +14,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/questionnaires" element={<Questionnaires />} />
-        <Route path="/questionnaire/rm-er18" element={<RmEr18Questionnaire />} />
+        <Route path="/questionnaire/values" element={<ValuesQuestionnaire />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -31,7 +31,7 @@ export default function Home() {
             </p>
             <div className="mt-6">
               <Link
-                to="/questionnaire/rm-er18"
+                to="/questionnaire/values"
                 className="inline-block rounded-xl bg-white px-6 py-3 font-semibold text-accent shadow-md transition hover:bg-white/90"
               >
                 Начать опросник →

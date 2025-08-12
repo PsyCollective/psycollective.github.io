@@ -3,7 +3,7 @@ import { PageLayout } from "../components/PageLayout";
 
 const questionnaires = [
   {
-    id: "rm-er18",
+    id: "values",
     title: "Опросник ценностей",
     description: "Комплексный инструмент для исследования личных ценностей и жизненных приоритетов. Включает 14 категорий ценностей с возможностью добавления собственных пунктов.",
     status: "active",

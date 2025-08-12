@@ -321,7 +321,7 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
       <div className="space-y-1.5">
         {section.items.map((it) => (
           <div key={it.id} className="flex items-center gap-2">
-            <div 
+            <div
               className="pc-row group flex items-center gap-3 rounded-2xl p-2 min-h-[2.5rem] cursor-pointer flex-1"
               onClick={() => onToggle(section.key, it.id, !it.checked)}
             >
@@ -383,7 +383,7 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
   );
 }
 
-export default function RmEr18Questionnaire() {
+export default function ValuesQuestionnaire() {
   const [searchParams] = useSearchParams();
   const [urlMetadata, setUrlMetadata] = useState<SaveData | null>(null);
   const [state, setState] = useState<QuestionnaireState>(() => {
