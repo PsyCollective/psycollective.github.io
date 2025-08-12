@@ -24,7 +24,7 @@ export default function Home() {
           {/* выделенный опросник */}
           <div className="relative overflow-hidden rounded-3xl bg-accent p-6 text-on-accent md:p-8">
             <LeafBadge className="pointer-events-none absolute -right-3 -top-3 h-24 w-24 opacity-30" />
-            <h3 className="text-xl font-bold md:text-2xl text-on-accent">Опросник ценностей — РМ_ЭР18</h3>
+            <h3 className="text-xl font-bold md:text-2xl text-on-accent">Опросник ценностей</h3>
             <p className="mt-3 max-w-3xl md:mt-4 text-on-accent opacity-90">
               Комплексный инструмент для исследования личных ценностей и жизненных приоритетов.
               Включает 14 категорий ценностей с возможностью добавления собственных пунктов.

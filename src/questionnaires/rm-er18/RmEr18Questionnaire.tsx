@@ -121,7 +121,7 @@ function nowStamp(): string {
 
 function buildExportText(state: QuestionnaireState, mode: "all" | "checked" = "checked"): string {
   const lines: string[] = [];
-  const title = "Опросник ценностей — РМ_ЭР18";
+  const title = "Опросник ценностей";
   lines.push(title);
   lines.push(`Экспорт: ${new Date().toLocaleString()}`);
   lines.push(`Режим: ${mode === "all" ? "все пункты" : "только отмеченные"}`);
@@ -452,7 +452,7 @@ export default function RmEr18Questionnaire() {
   const openExport = (mode: "all" | "checked") => {
     const text = buildExportText(state, mode);
     setExportText(text);
-    setExportFile(`РМ_ЭР18_${mode}_${nowStamp()}.txt`);
+    setExportFile(`Опросник_ценностей_${mode}_${nowStamp()}.txt`);
     setIsExportOpen(true);
   };
 
@@ -497,7 +497,7 @@ export default function RmEr18Questionnaire() {
               ← Назад
             </Link>
             <h1 className="text-2xl font-black tracking-tight text-fg md:text-3xl">
-              Опросник ценностей — РМ_ЭР18
+              Опросник ценностей
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
