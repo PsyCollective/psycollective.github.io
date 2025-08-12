@@ -263,37 +263,35 @@ function ExportModal({ open, text, filename, onClose }: ExportModalProps) {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div
-          className="w-full max-w-3xl overflow-hidden rounded-3xl border border-ring-beige bg-card-beige shadow-[0_10px_50px_rgba(31,41,55,0.2)]"
-        >
+        <div className="w-full max-w-3xl overflow-hidden rounded-3xl border border-border bg-surface shadow-[0_10px_50px_rgba(2,6,23,0.6)]">
           <div className="flex items-center justify-between gap-3 border-b border-ring-beige px-5 py-4">
-            <h3 className="text-lg font-bold text-slate-800">Экспорт в текст</h3>
+            <h3 className="text-lg font-bold text-fg">Экспорт в текст</h3>
             <button
               onClick={onClose}
-              className="rounded-xl px-3 py-1 text-slate-800 ring-1 bg-note-beige border-ring-beige"
+              className="rounded-xl px-3 py-1 text-fg ring-1 bg-note border-border"
             >
               Закрыть
             </button>
           </div>
           <div className="space-y-3 p-5">
-            <p className="text-sm text-slate-700">Содержимое ниже можно скопировать или скачать как .txt</p>
+            <p className="text-sm pc-muted">Содержимое ниже можно скопировать или скачать как .txt</p>
             <textarea
               readOnly
               value={text}
-              className="h-80 w-full rounded-2xl border border-ring-beige bg-white/70 p-3 font-mono text-sm text-slate-800"
+              className="h-80 w-full rounded-2xl border border-border bg-surface p-3 font-mono text-sm text-fg"
             />
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch {} }}
-                className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm hover:brightness-110 bg-accent-teal"
+                className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm hover:brightness-110 bg-accent"
               >
                 {copied ? "Скопировано!" : "Копировать"}
               </button>
               <button
                 onClick={() => downloadText(filename, text)}
-                className="rounded-xl bg-slate-900 px-4 py-2 font-semibold text-white hover:brightness-110"
+                className="rounded-xl bg-slate-900 px-4 py-2 font-semibold text-white hover:brightness-110 dark:bg-slate-700"
               >
                 Скачать .txt
               </button>
@@ -316,26 +314,26 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
   const [input, setInput] = useState("");
 
   return (
-    <section
-      className="rounded-3xl border border-ring-beige p-4 shadow-sm backdrop-blur bg-white/80 md:p-6"
-    >
-      <h2 className="mb-3 text-lg font-extrabold tracking-tight text-slate-800 md:text-xl">{section.title}</h2>
+    <section className="pc-card p-4 shadow-sm md:p-6">
+      <h2 className="mb-3 text-lg font-extrabold tracking-tight text-fg md:text-xl">{section.title}</h2>
 
       <ul className="space-y-2.5">
         {section.items.map((it) => (
-          <li key={it.id} className="group flex items-start gap-3 rounded-2xl p-2 transition hover:bg-white">
+          <li key={it.id} className="pc-row group flex items-start gap-3 rounded-2xl p-2">
             <input
               id={it.id}
               type="checkbox"
               checked={it.checked}
               onChange={(e) => onToggle(section.key, it.id, e.target.checked)}
-              className={`mt-1 h-5 w-5 appearance-none rounded-md outline-none ring-2 ring-transparent transition border border-ring-beige ${it.checked ? 'bg-accent-teal' : 'bg-white'}`}
+              className={`pc-checkbox mt-1 ${it.checked ? 'bg-accent border-accent' : ''}`}
             />
-            <label htmlFor={it.id} className="select-none leading-6 text-slate-800">
+            <label htmlFor={it.id} className="select-none leading-6 text-fg">
               {it.text}
             </label>
             {it.custom && (
-              <span className="ml-2 rounded-full px-2 py-0.5 text-xs text-slate-700 bg-note-beige">добавлено</span>
+              <span className="ml-2 rounded-full px-2 py-0.5 text-xs pc-muted bg-note">
+                добавлено
+              </span>
             )}
             {it.custom && (
               <button
@@ -366,11 +364,11 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
           }}
           placeholder="Другое — добавьте свой пункт и нажмите «Добавить»"
           aria-label="Другое"
-          className="flex-1 rounded-xl border border-ring-beige bg-white px-3 py-2"
+          className="flex-1 rounded-xl border border-border bg-surface text-fg px-3 py-2"
         />
         <button
           onClick={() => { if (input.trim()) { onAdd(section.key, input.trim()); setInput(""); } }}
-          className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal"
+          className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent"
         >
           Добавить
         </button>
@@ -489,19 +487,16 @@ export default function RmEr18Questionnaire() {
       <div className="relative mx-auto max-w-4xl px-4 py-6 md:py-8">
         <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Link
-              to="/"
-              className="rounded-xl px-3 py-2 font-semibold text-slate-800 ring-1 backdrop-blur transition hover:bg-white bg-white/70 border-ring-beige"
-            >
+            <Link to="/" className="rounded-xl px-3 py-2 font-semibold text-fg ring-1 backdrop-blur transition bg-surface hover:brightness-105 border-border">
               ← Назад
             </Link>
-            <h1 className="text-2xl font-black tracking-tight text-slate-800 md:text-3xl">
+            <h1 className="text-2xl font-black tracking-tight text-fg md:text-3xl">
               Опросник ценностей — РМ_ЭР18
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="hidden sm:inline text-sm text-slate-700">Выбрано: {totalChecked}</span>
-            <button onClick={shareState} className="rounded-xl px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal">Поделиться</button>
+            <span className="hidden sm:inline text-sm pc-muted">Выбрано: {totalChecked}</span>
+            <button onClick={shareState} className="rounded-xl px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent">Поделиться</button>
             <button onClick={() => openExport("checked")} className="rounded-xl bg-emerald-600 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт выбранного</button>
             <button onClick={() => openExport("all")} className="rounded-xl bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт всего</button>
             <button onClick={resetAll} className="rounded-xl bg-red-600 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Сбросить всё</button>
@@ -509,13 +504,13 @@ export default function RmEr18Questionnaire() {
         </header>
 
         {urlMetadata && (
-          <div className="mb-4 rounded-2xl border border-ring-beige p-3 text-slate-800 bg-white/70">
+          <div className="mb-4 rounded-2xl border border-border p-3 text-fg bg-surface">
             <span className="mr-2">📤</span>
             <span className="text-sm">Загружено из поделённой ссылки • Создано: {new Date(urlMetadata.createdAt).toLocaleString("ru-RU")}</span>
           </div>
         )}
 
-        <div className="mb-6 rounded-2xl border border-ring-beige p-4 text-center text-sm text-slate-800 bg-note-beige">
+        <div className="mb-6 rounded-2xl border border-border p-4 text-center text-sm text-fg bg-note">
           💾 <strong>Автосохранение.</strong> Все данные сохраняются локально в вашем браузере и <strong>не передаются</strong> на сервер.
         </div>
 
@@ -532,16 +527,14 @@ export default function RmEr18Questionnaire() {
           ))}
         </main>
 
-        <div
-          className="mt-8 rounded-[28px] border border-ring-beige bg-card-beige p-6 text-center shadow-[0_8px_40px_rgba(31,41,55,0.08)]"
-        >
-          <h3 className="text-lg font-bold text-slate-800">Завершение опросника</h3>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-700">
+        <div className="mt-8 rounded-[28px] border border-border bg-surface p-6 text-center shadow-[0_8px_40px_rgba(31,41,55,0.08)]">
+          <h3 className="text-lg font-bold text-fg">Завершение опросника</h3>
+          <p className="mx-auto mt-2 max-w-2xl text-sm pc-muted">
             Поделитесь ссылкой с выбранными пунктами или экспортируйте результаты в текстовый файл.
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            <span className="text-sm text-slate-700">Выбрано пунктов: {totalChecked}</span>
-            <button onClick={shareState} className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal">Поделиться</button>
+            <span className="text-sm pc-muted">Выбрано пунктов: {totalChecked}</span>
+            <button onClick={shareState} className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent">Поделиться</button>
             <button onClick={() => openExport("checked")} className="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт выбранного</button>
             <button onClick={() => openExport("all")} className="rounded-xl bg-slate-900 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт всего</button>
             <button onClick={resetAll} className="rounded-xl bg-red-600 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Сбросить всё</button>

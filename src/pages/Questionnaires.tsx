@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PageLayout } from "../components/PageLayout";
 
 const questionnaires = [
   {
@@ -13,13 +14,13 @@ const questionnaires = [
 
 export default function Questionnaires() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
+    <PageLayout className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="space-y-8">
           <div className="text-center space-y-4">
             <Link
               to="/"
-              className="inline-block text-blue-600 dark:text-blue-400 hover:underline mb-4"
+              className="inline-block text-accent-teal hover:underline mb-4"
             >
               ← Назад на главную
             </Link>
@@ -35,7 +36,7 @@ export default function Questionnaires() {
             {questionnaires.map((questionnaire) => (
               <div
                 key={questionnaire.id}
-                className="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-3xl p-8 shadow-xl border border-white/20 dark:border-slate-700/20"
+                className="rounded-3xl p-8 shadow-xl border border-ring-beige bg-card-beige backdrop-blur"
               >
                 <div className={`bg-gradient-to-r ${questionnaire.gradient} rounded-2xl p-6 text-white text-left`}>
                   <div className="flex items-start justify-between mb-3">
@@ -53,7 +54,7 @@ export default function Questionnaires() {
                   </p>
                   <Link
                     to={`/questionnaire/${questionnaire.id}`}
-                    className="inline-block bg-white text-emerald-600 px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors shadow-lg"
+                    className="inline-block bg-white text-accent-teal px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors shadow-lg"
                   >
                     Начать опросник →
                   </Link>
@@ -62,7 +63,7 @@ export default function Questionnaires() {
             ))}
           </div>
 
-          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-3xl p-8 shadow-xl border border-white/20 dark:border-slate-700/20">
+          <div className="rounded-3xl p-8 shadow-xl border border-ring-beige bg-card-beige backdrop-blur">
             <div className="text-center">
               <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-slate-100">
                 Скоро появятся новые опросники
@@ -74,6 +75,6 @@ export default function Questionnaires() {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

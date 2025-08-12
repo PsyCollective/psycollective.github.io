@@ -1,28 +1,103 @@
 @import "tailwindcss";
 
-@theme {
-  --color-bg-beige: #F6EDE3;
-  --color-card-beige: #FFF9F2;
-  --color-accent-teal: #2E8A84;
-  --color-ring-beige: #EADBCB;
-  --color-note-beige: #FFF3E4;
+/* ---------- 1) PALETTE (primitive tokens) ---------- */
+:root {
+  /* light palette */
+  --pc-p-bg-light:        #F6EDE3;
+  --pc-p-surface-light:   #FFF9F2;
+  --pc-p-note-light:      #FFF3E4;
+  --pc-p-border-light:    #EADBCB;
+  --pc-p-fg-light:        #1f2937; /* slate-800 */
+  --pc-p-fg-muted-light:  #475569; /* slate-600 */
+  --pc-p-control-light:   #ffffff; /* чекбокс/инпут по умолчанию */
+  --pc-p-overlay-light:   rgba(2,6,23,.40);
+
+  /* dark palette */
+  --pc-p-bg-dark:         #0b1220;
+  --pc-p-surface-dark:    #0f172a;
+  --pc-p-note-dark:       #0b2530;
+  --pc-p-border-dark:     #1f2937;
+  --pc-p-fg-dark:         #e2e8f0; /* slate-200 */
+  --pc-p-fg-muted-dark:   #94a3b8; /* slate-400 */
+  --pc-p-control-dark:    #1f2937; /* чекбокс/инпут по умолчанию */
+  --pc-p-overlay-dark:    rgba(2,6,23,.60);
+
+  /* brand */
+  --pc-p-accent:          #2E8A84;
+  --pc-p-on-accent:       #ffffff;
 }
 
+/* ---------- 2) SEMANTIC (alias tokens) ---------- */
+:root {
+  --pc-bg:           var(--pc-p-bg-light);
+  --pc-surface:      var(--pc-p-surface-light);
+  --pc-note:         var(--pc-p-note-light);
+  --pc-border:       var(--pc-p-border-light);
+  --pc-fg:           var(--pc-p-fg-light);
+  --pc-fg-muted:     var(--pc-p-fg-muted-light);
+  --pc-accent:       var(--pc-p-accent);
+  --pc-on-accent:    var(--pc-p-on-accent);
+  --pc-overlay:      var(--pc-p-overlay-light);
+  --pc-control:      var(--pc-p-control-light);
+  --pc-row-hover:    #ffffffb3;       /* hover фона строк/чекбоксов в light */
+  --pc-focus-ring:   var(--pc-accent);
+}
+.dark {
+  --pc-bg:           var(--pc-p-bg-dark);
+  --pc-surface:      var(--pc-p-surface-dark);
+  --pc-note:         var(--pc-p-note-dark);
+  --pc-border:       var(--pc-p-border-dark);
+  --pc-fg:           var(--pc-p-fg-dark);
+  --pc-fg-muted:     var(--pc-p-fg-muted-dark);
+  --pc-accent:       var(--pc-p-accent);
+  --pc-on-accent:    var(--pc-p-on-accent);
+  --pc-overlay:      var(--pc-p-overlay-dark);
+  --pc-control:      var(--pc-p-control-dark);
+  --pc-row-hover:    #1f2937b3;       /* hover в dark */
+  --pc-focus-ring:   var(--pc-accent);
+}
+
+/* ---------- 3) Map semantic → Tailwind tokens via @theme ---------- */
+@theme {
+  /* новые, «правильные» имена */
+  --color-bg:           var(--pc-bg);
+  --color-surface:      var(--pc-surface);
+  --color-note:         var(--pc-note);
+  --color-border:       var(--pc-border);
+  --color-fg:           var(--pc-fg);
+  --color-fg-muted:     var(--pc-fg-muted);
+  --color-accent:       var(--pc-accent);
+  --color-on-accent:    var(--pc-on-accent);
+  --color-overlay:      var(--pc-overlay);
+  --color-control:      var(--pc-control);
+  --color-row-hover:    var(--pc-row-hover);
+
+  /* reference tokens — совместимость со старыми классами */
+  --color-bg-beige:     var(--pc-bg);
+  --color-card-beige:   var(--pc-surface);
+  --color-note-beige:   var(--pc-note);
+  --color-ring-beige:   var(--pc-border);
+  --color-accent-teal:  var(--pc-accent);
+}
+
+/* ---------- 4) Base styles ---------- */
 @layer base {
   :root {
     @apply font-sans;
   }
 
-  body {
-    @apply min-w-[320px] min-h-screen relative m-0;
+  html, body {
+    background-color: var(--pc-bg);
+    color: var(--pc-fg);
   }
+  body { @apply min-w-[320px] min-h-screen relative m-0; }
 
   html {
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
-    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
   }
 }
 
@@ -33,4 +108,28 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* ---------- 5) Component utilities ---------- */
+@layer components {
+  .pc-card { @apply rounded-3xl border border-border bg-surface backdrop-blur; }
+  .pc-title { @apply font-bold text-fg; }
+  .pc-muted { @apply text-fg-muted; }
+
+  /* Чекбокс по токенам (ровно один класс вместо «портянки») */
+  .pc-checkbox {
+    appearance: none;
+    width: 1.25rem; height: 1.25rem;
+    border-radius: .375rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-control);
+    transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+  }
+  .pc-checkbox:hover { background: var(--color-row-hover); }
+  .pc-checkbox:checked { background: var(--color-accent); border-color: var(--color-accent); }
+  .pc-checkbox:focus-visible { outline: none; box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--pc-focus-ring), transparent 70%); }
+
+  /* hover для строк списков */
+  .pc-row { transition: background-color .15s ease; }
+  .pc-row:hover { background-color: var(--color-row-hover); }
 }
