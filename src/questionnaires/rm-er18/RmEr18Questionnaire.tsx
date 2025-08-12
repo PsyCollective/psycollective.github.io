@@ -318,36 +318,41 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
     <section className="pc-card p-4 shadow-sm md:p-6">
       <h2 className="mb-3 text-lg font-extrabold tracking-tight text-fg md:text-xl">{section.title}</h2>
 
-      <ul className="space-y-2.5">
+      <div className="space-y-1.5">
         {section.items.map((it) => (
-          <li key={it.id} className="pc-row group flex items-start gap-3 rounded-2xl p-2">
-            <input
-              id={it.id}
-              type="checkbox"
-              checked={it.checked}
-              onChange={(e) => onToggle(section.key, it.id, e.target.checked)}
-              className={`pc-checkbox mt-1 ${it.checked ? 'bg-accent border-accent' : ''}`}
-            />
-            <label htmlFor={it.id} className="select-none leading-6 text-fg">
-              {it.text}
-            </label>
-            {it.custom && (
-              <span className="ml-2 rounded-full px-2 py-0.5 text-xs pc-muted bg-note">
-                добавлено
-              </span>
-            )}
+          <div key={it.id} className="flex items-center gap-2">
+            <div 
+              className="pc-row group flex items-center gap-3 rounded-2xl p-2 min-h-[2.5rem] cursor-pointer flex-1"
+              onClick={() => onToggle(section.key, it.id, !it.checked)}
+            >
+              <input
+                id={it.id}
+                type="checkbox"
+                checked={it.checked}
+                onChange={(e) => onToggle(section.key, it.id, e.target.checked)}
+                className="pc-checkbox pointer-events-none"
+              />
+              <label htmlFor={it.id} className="select-none leading-6 text-fg flex-1 pointer-events-none">
+                {it.text}
+              </label>
+              {it.custom && (
+                <span className="rounded-full px-2 py-0.5 text-xs pc-muted bg-note">
+                  добавлено
+                </span>
+              )}
+            </div>
             {it.custom && (
               <button
                 onClick={() => onRemove(section.key, it.id)}
                 title="Удалить пользовательский пункт"
-                className="ml-auto -mr-1 inline-flex items-center justify-center rounded-md p-1 text-slate-500 transition hover:text-red-600"
+                className="inline-flex items-center justify-center rounded-full p-1 w-6 h-6 text-fg-muted hover:text-red-500 hover:bg-red-50 bg-note transition cursor-pointer"
               >
                 ×
               </button>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <div className="mt-4 flex gap-2">
         <input
@@ -422,7 +427,7 @@ export default function RmEr18Questionnaire() {
       sections: prev.sections.map((s) =>
         s.key !== sectionKey ? s : {
           ...s,
-          items: [...s.items, { id: uid(sectionKey), text, checked: false, custom: true }],
+          items: [...s.items, { id: uid(sectionKey), text, checked: true, custom: true }],
         }
       ),
     }));

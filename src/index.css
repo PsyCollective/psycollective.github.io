@@ -92,6 +92,15 @@
   }
   body { @apply min-w-[320px] min-h-screen relative m-0; }
 
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+  ::-moz-selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
   html {
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -124,9 +133,23 @@
     border: 1px solid var(--color-border);
     background: var(--color-control);
     transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   .pc-checkbox:hover { background: var(--color-row-hover); }
   .pc-checkbox:checked { background: var(--color-accent); border-color: var(--color-accent); }
+  .pc-checkbox:checked::after {
+    content: '';
+    width: 0.375rem;
+    height: 0.625rem;
+    border-right: 2px solid var(--color-on-accent);
+    border-bottom: 2px solid var(--color-on-accent);
+    transform: rotate(45deg);
+    margin-bottom: 0.125rem;
+  }
   .pc-checkbox:focus-visible { outline: none; box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--pc-focus-ring), transparent 70%); }
 
   /* hover для строк списков */
