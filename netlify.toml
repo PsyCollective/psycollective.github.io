@@ -1,0 +1,8 @@
+[build]
+  command = "bun run build --public-path \"/\""
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
