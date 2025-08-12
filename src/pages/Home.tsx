@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { LeafBadge, Bubbles } from "../components/DecorativeComponents";
 import { PageLayout } from "../components/PageLayout";
+import { Disclaimer } from "../components/Disclaimer";
 
 export default function Home() {
   return (
@@ -20,10 +21,6 @@ export default function Home() {
 
         {/* основная карточка */}
         <section className="pc-card rounded-[32px] p-6 shadow-[0_8px_40px_rgba(31,41,55,0.08)] md:p-10">
-          <h2 className="mb-6 text-2xl pc-title md:mb-8 md:text-3xl">
-            Опросник ценностей
-          </h2>
-
           {/* выделенный опросник */}
           <div className="relative overflow-hidden rounded-3xl bg-accent p-6 text-[--color-on-accent] md:p-8">
             <LeafBadge className="pointer-events-none absolute -right-3 -top-3 h-24 w-24 opacity-30" />
@@ -42,10 +39,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 rounded-2xl bg-note p-4 text-sm pc-muted ring-1 ring-border md:mt-10 md:p-5">
-            Все опросники проходят <span className="font-semibold">локально</span> в вашем браузере; результаты
-            <span className="font-semibold"> не отправляются</span> на сервер.
-          </div>
+          <Disclaimer variant="general" className="mt-8 md:mt-10" />
         </section>
       </div>
     </PageLayout>

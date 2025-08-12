@@ -2,6 +2,7 @@ import {useEffect, useMemo, useState} from "react";
 import {Link, useSearchParams} from "react-router-dom";
 import {z} from "zod";
 import {PageLayout} from "../../components/PageLayout";
+import {Disclaimer} from "../../components/Disclaimer";
 import questionnaireData from "./data.json";
 
 // Color scheme now defined in tailwind.config.js
@@ -510,9 +511,7 @@ export default function RmEr18Questionnaire() {
           </div>
         )}
 
-        <div className="mb-6 rounded-2xl border border-border p-4 text-center text-sm text-fg bg-note">
-          💾 <strong>Автосохранение.</strong> Все данные сохраняются локально в вашем браузере и <strong>не передаются</strong> на сервер.
-        </div>
+        <Disclaimer variant="autosave" className="mb-6" />
 
         {/* One column — sections under another */}
         <main className="space-y-4 md:space-y-6">
