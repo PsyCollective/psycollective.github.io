@@ -4,11 +4,7 @@ import {z} from "zod";
 import {PageLayout} from "../../components/PageLayout";
 import questionnaireData from "./data.json";
 
-// ===== Палитра/константы визуального стиля (UI-ТОЛЬКО) =====
-const CARD_BEIGE = "#FFF9F2"; // карточки
-const ACCENT_TEAL = "#2E8A84"; // акцентные элементы
-const RING_BEIGE = "#EADBCB"; // обводки
-const NOTE_BEIGE = "#FFF3E4"; // заметки/дисклеймеры
+// Color scheme now defined in tailwind.config.js
 
 // ================== Zod Schemas with versioning ==================
 const QuestionnaireItemSchema = z.object({
@@ -270,15 +266,13 @@ function ExportModal({ open, text, filename, onClose }: ExportModalProps) {
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-3xl overflow-hidden rounded-3xl border shadow-[0_10px_50px_rgba(31,41,55,0.2)]"
-          style={{ background: CARD_BEIGE, borderColor: RING_BEIGE }}
+          className="w-full max-w-3xl overflow-hidden rounded-3xl border border-ring-beige bg-card-beige shadow-[0_10px_50px_rgba(31,41,55,0.2)]"
         >
-          <div className="flex items-center justify-between gap-3 border-b px-5 py-4" style={{ borderColor: RING_BEIGE }}>
+          <div className="flex items-center justify-between gap-3 border-b border-ring-beige px-5 py-4">
             <h3 className="text-lg font-bold text-slate-800">Экспорт в текст</h3>
             <button
               onClick={onClose}
-              className="rounded-xl px-3 py-1 text-slate-800 ring-1"
-              style={{ background: NOTE_BEIGE, borderColor: RING_BEIGE }}
+              className="rounded-xl px-3 py-1 text-slate-800 ring-1 bg-note-beige border-ring-beige"
             >
               Закрыть
             </button>
@@ -288,14 +282,12 @@ function ExportModal({ open, text, filename, onClose }: ExportModalProps) {
             <textarea
               readOnly
               value={text}
-              className="h-80 w-full rounded-2xl border bg-white/70 p-3 font-mono text-sm text-slate-800"
-              style={{ borderColor: RING_BEIGE }}
+              className="h-80 w-full rounded-2xl border border-ring-beige bg-white/70 p-3 font-mono text-sm text-slate-800"
             />
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch {} }}
-                className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm hover:brightness-110"
-                style={{ background: ACCENT_TEAL }}
+                className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm hover:brightness-110 bg-accent-teal"
               >
                 {copied ? "Скопировано!" : "Копировать"}
               </button>
@@ -325,8 +317,7 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
 
   return (
     <section
-      className="rounded-3xl border p-4 shadow-sm backdrop-blur md:p-6"
-      style={{ background: "rgba(255, 255, 255, 0.8)", borderColor: RING_BEIGE }}
+      className="rounded-3xl border border-ring-beige p-4 shadow-sm backdrop-blur bg-white/80 md:p-6"
     >
       <h2 className="mb-3 text-lg font-extrabold tracking-tight text-slate-800 md:text-xl">{section.title}</h2>
 
@@ -338,14 +329,13 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
               type="checkbox"
               checked={it.checked}
               onChange={(e) => onToggle(section.key, it.id, e.target.checked)}
-              className="mt-1 h-5 w-5 appearance-none rounded-md outline-none ring-2 ring-transparent transition"
-              style={{ border: `1px solid ${RING_BEIGE}`, background: it.checked ? ACCENT_TEAL : "white" }}
+              className={`mt-1 h-5 w-5 appearance-none rounded-md outline-none ring-2 ring-transparent transition border border-ring-beige ${it.checked ? 'bg-accent-teal' : 'bg-white'}`}
             />
             <label htmlFor={it.id} className="select-none leading-6 text-slate-800">
               {it.text}
             </label>
             {it.custom && (
-              <span className="ml-2 rounded-full px-2 py-0.5 text-xs text-slate-700" style={{ background: NOTE_BEIGE }}>добавлено</span>
+              <span className="ml-2 rounded-full px-2 py-0.5 text-xs text-slate-700 bg-note-beige">добавлено</span>
             )}
             {it.custom && (
               <button
@@ -376,13 +366,11 @@ function Section({ section, onToggle, onAdd, onRemove }: SectionProps) {
           }}
           placeholder="Другое — добавьте свой пункт и нажмите «Добавить»"
           aria-label="Другое"
-          className="flex-1 rounded-xl border bg-white px-3 py-2"
-          style={{ borderColor: RING_BEIGE }}
+          className="flex-1 rounded-xl border border-ring-beige bg-white px-3 py-2"
         />
         <button
           onClick={() => { if (input.trim()) { onAdd(section.key, input.trim()); setInput(""); } }}
-          className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110"
-          style={{ background: ACCENT_TEAL }}
+          className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal"
         >
           Добавить
         </button>
@@ -503,8 +491,7 @@ export default function RmEr18Questionnaire() {
           <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="rounded-xl px-3 py-2 font-semibold text-slate-800 ring-1 backdrop-blur transition hover:bg-white"
-              style={{ background: "rgba(255,255,255,0.7)", borderColor: RING_BEIGE }}
+              className="rounded-xl px-3 py-2 font-semibold text-slate-800 ring-1 backdrop-blur transition hover:bg-white bg-white/70 border-ring-beige"
             >
               ← Назад
             </Link>
@@ -514,7 +501,7 @@ export default function RmEr18Questionnaire() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="hidden sm:inline text-sm text-slate-700">Выбрано: {totalChecked}</span>
-            <button onClick={shareState} className="rounded-xl px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110" style={{ background: ACCENT_TEAL }}>Поделиться</button>
+            <button onClick={shareState} className="rounded-xl px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal">Поделиться</button>
             <button onClick={() => openExport("checked")} className="rounded-xl bg-emerald-600 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт выбранного</button>
             <button onClick={() => openExport("all")} className="rounded-xl bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт всего</button>
             <button onClick={resetAll} className="rounded-xl bg-red-600 px-3 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Сбросить всё</button>
@@ -522,13 +509,13 @@ export default function RmEr18Questionnaire() {
         </header>
 
         {urlMetadata && (
-          <div className="mb-4 rounded-2xl border p-3 text-slate-800" style={{ background: "rgba(255,255,255,0.7)", borderColor: RING_BEIGE }}>
+          <div className="mb-4 rounded-2xl border border-ring-beige p-3 text-slate-800 bg-white/70">
             <span className="mr-2">📤</span>
             <span className="text-sm">Загружено из поделённой ссылки • Создано: {new Date(urlMetadata.createdAt).toLocaleString("ru-RU")}</span>
           </div>
         )}
 
-        <div className="mb-6 rounded-2xl border p-4 text-center text-sm text-slate-800" style={{ background: NOTE_BEIGE, borderColor: RING_BEIGE }}>
+        <div className="mb-6 rounded-2xl border border-ring-beige p-4 text-center text-sm text-slate-800 bg-note-beige">
           💾 <strong>Автосохранение.</strong> Все данные сохраняются локально в вашем браузере и <strong>не передаются</strong> на сервер.
         </div>
 
@@ -546,8 +533,7 @@ export default function RmEr18Questionnaire() {
         </main>
 
         <div
-          className="mt-8 rounded-[28px] border p-6 text-center shadow-[0_8px_40px_rgba(31,41,55,0.08)]"
-          style={{ background: CARD_BEIGE, borderColor: RING_BEIGE }}
+          className="mt-8 rounded-[28px] border border-ring-beige bg-card-beige p-6 text-center shadow-[0_8px_40px_rgba(31,41,55,0.08)]"
         >
           <h3 className="text-lg font-bold text-slate-800">Завершение опросника</h3>
           <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-700">
@@ -555,7 +541,7 @@ export default function RmEr18Questionnaire() {
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             <span className="text-sm text-slate-700">Выбрано пунктов: {totalChecked}</span>
-            <button onClick={shareState} className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110" style={{ background: ACCENT_TEAL }}>Поделиться</button>
+            <button onClick={shareState} className="rounded-xl px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110 bg-accent-teal">Поделиться</button>
             <button onClick={() => openExport("checked")} className="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт выбранного</button>
             <button onClick={() => openExport("all")} className="rounded-xl bg-slate-900 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Экспорт всего</button>
             <button onClick={resetAll} className="rounded-xl bg-red-600 px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110">Сбросить всё</button>

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg-beige: #F6EDE3;
+  --color-card-beige: #FFF9F2;
+  --color-accent-teal: #2E8A84;
+  --color-ring-beige: #EADBCB;
+  --color-note-beige: #FFF3E4;
+}
+
 @layer base {
   :root {
     @apply font-sans;
