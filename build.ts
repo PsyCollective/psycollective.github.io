@@ -1,8 +1,9 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm } from "fs/promises";
+import { rm, copyFile, mkdir } from "fs/promises";
 import path from "path";
+import sharp from "sharp";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   console.log(`
@@ -33,7 +34,7 @@ Example:
   process.exit(0);
 }
 
-const toCamelCase = (str: string): string => str.replace(/-([a-z])/g, g => g[1].toUpperCase());
+const toCamelCase = (str: string): string => str.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 
 const parseValue = (value: string): any => {
   if (value === "true") return true;
@@ -47,8 +48,8 @@ const parseValue = (value: string): any => {
   return value;
 };
 
-function parseArgs(): Partial<Bun.BuildConfig> {
-  const config: Partial<Bun.BuildConfig> = {};
+function parseArgs(): Record<string, any> {
+  const config: Record<string, any> = {};
   const args = process.argv.slice(2);
 
   for (let i = 0; i < args.length; i++) {
@@ -72,7 +73,15 @@ function parseArgs(): Partial<Bun.BuildConfig> {
     let value: string;
 
     if (arg.includes("=")) {
-      [key, value] = arg.slice(2).split("=", 2) as [string, string];
+      const parts = arg.slice(2).split("=", 2);
+      const keyPart = parts[0];
+      const valuePart = parts[1];
+      if (keyPart && valuePart !== undefined) {
+        key = keyPart;
+        value = valuePart;
+      } else {
+        continue;
+      }
     } else {
       key = arg.slice(2);
       value = args[++i] ?? "";
@@ -81,9 +90,13 @@ function parseArgs(): Partial<Bun.BuildConfig> {
     key = toCamelCase(key);
 
     if (key.includes(".")) {
-      const [parentKey, childKey] = key.split(".");
-      config[parentKey] = config[parentKey] || {};
-      config[parentKey][childKey] = parseValue(value);
+      const parts = key.split(".");
+      const parentKey = parts[0];
+      const childKey = parts[1];
+      if (parentKey && childKey) {
+        config[parentKey] = config[parentKey] || {};
+        config[parentKey][childKey] = parseValue(value);
+      }
     } else {
       config[key] = parseValue(value);
     }
@@ -102,7 +115,11 @@ const formatFileSize = (bytes: number): string => {
     unitIndex++;
   }
 
-  return `${size.toFixed(2)} ${units[unitIndex]}`;
+  const unit = units[unitIndex];
+  if (unit === undefined) {
+    throw new Error(`Invalid unit index: ${unitIndex}`);
+  }
+  return `${size.toFixed(2)} ${unit}`;
 };
 
 console.log("\n🚀 Starting build process...\n");

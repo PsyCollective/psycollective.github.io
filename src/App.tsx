@@ -4,7 +4,7 @@ import { ThemeProvider } from "./ThemeContext";
 import { ThemeToggle } from "./ThemeToggle";
 import Home from "./pages/Home";
 import Questionnaires from "./pages/Questionnaires";
-import RmEr18Questionnaire from "./pages/RmEr18Questionnaire";
+import RmEr18Questionnaire from "./questionnaires/rm-er18/RmEr18Questionnaire";
 import NotFound from "./pages/NotFound";
 
 function AppContent() {
